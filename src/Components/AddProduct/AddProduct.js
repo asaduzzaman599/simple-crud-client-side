@@ -1,10 +1,26 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 const AddProduct = () => {
+    const navigate = useNavigate()
     const { register, handleSubmit } = useForm();
-    const onSubmit = data => console.log(data);
+    const onSubmit = productInfo => {
+        console.log(productInfo)
+        fetch('http://localhost:2000/product', {
+            method: 'POST',
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(productInfo)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+
+            })
+    };
     return (
         <Container>
             <h3>Add Product</h3>
