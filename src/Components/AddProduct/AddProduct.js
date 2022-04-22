@@ -18,8 +18,11 @@ const AddProduct = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
+                if (data.result.acknowledged) {
 
+                }
             })
+
     };
     return (
         <Container>
@@ -28,7 +31,7 @@ const AddProduct = () => {
                 <input placeholder='Product Name' {...register("name")} />
                 <input placeholder='Product Price' {...register("price")} />
                 <textarea placeholder='Product Descriptions' {...register("description")} />
-                <input type="submit" />
+                <input className='w-75 btn btn-primary' type="submit" />
             </form>
         </Container>
     );
