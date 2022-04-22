@@ -8,10 +8,10 @@ const AddProduct = () => {
     return (
         <Container>
             <h3>Add Product</h3>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <input {...register("firstName", { required: true, maxLength: 20 })} />
-                <input {...register("lastName", { pattern: /^[A-Za-z]+$/i })} />
-                <input type="number" {...register("age", { min: 18, max: 99 })} />
+            <form className='d-flex flex-column w-50 mx-auto gap-2' onSubmit={handleSubmit(onSubmit)}>
+                <input placeholder='Product Name' {...register("name")} />
+                <input placeholder='Product Price' {...register("price")} />
+                <textarea placeholder='Product Descriptions' {...register("description")} />
                 <input type="submit" />
             </form>
         </Container>
