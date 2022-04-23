@@ -4,9 +4,9 @@ import { Outlet } from 'react-router-dom';
 import AddProduct from '../AddProduct/AddProduct';
 import Product from '../Product/Product';
 
-const Home = () => {
+const Home = ({ reload }) => {
+    const [isReload, setIsReload] = reload
     const [products, setProducts] = useState([])
-    const [isReload, setIsReload] = useState(false)
     useEffect(() => {
         fetch('http://localhost:2000/product')
             .then(res => res.json())

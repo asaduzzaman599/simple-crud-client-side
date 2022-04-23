@@ -3,11 +3,11 @@ import { Container } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-const AddProduct = () => {
+const AddProduct = ({ reload }) => {
+    const [isReload, setIsReload] = reload
     const navigate = useNavigate()
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset } = useForm();
     const onSubmit = productInfo => {
-        console.log(productInfo)
         fetch('http://localhost:2000/product', {
             method: 'POST',
             headers: {
@@ -17,15 +17,16 @@ const AddProduct = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 if (data.result.acknowledged) {
-
+                    setIsReload(!isReload)
+                    reset();
+                    navigate('/')
                 }
             })
 
     };
     return (
-        <Container>
+        <Container className='mt-5'>
             <h3>Add Product</h3>
             <form className='d-flex flex-column w-50 mx-auto gap-2' onSubmit={handleSubmit(onSubmit)}>
                 <input placeholder='Product Name' {...register("name")} />

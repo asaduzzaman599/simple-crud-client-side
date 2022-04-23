@@ -10,7 +10,6 @@ const Product = ({ product: { _id, name, description, price }, reload }) => {
         }).then(res => res.json())
             .then(data => {
                 if (data.deletedCount) {
-                    console.log(data)
                     setIsReload(!isReaload)
                 }
             })
@@ -20,7 +19,7 @@ const Product = ({ product: { _id, name, description, price }, reload }) => {
             <h3>{name}</h3>
             <p>{description}</p>
             <p>${price}</p>
-            <p><Link className='btn btn-success me-3' to="/">Update</Link><button onClick={() => handleDelete(_id)} className='btn btn-danger'>X</button></p>
+            <p><Link className='btn btn-success me-3' to={`/update/${_id}`}>Update</Link><button onClick={() => handleDelete(_id)} className='btn btn-danger'>X</button></p>
         </div>
     );
 };
