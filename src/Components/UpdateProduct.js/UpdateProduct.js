@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -12,6 +13,8 @@ const UpdateProduct = ({ reload }) => {
 
     useEffect(() => {
         const url = `http://localhost:2000/product/${productId}`
+
+
         fetch(url)
             .then(res => res.json())
             .then(data => {
@@ -27,21 +30,33 @@ const UpdateProduct = ({ reload }) => {
 
     const onSubmit = productInfo => {
         const url = `http://localhost:2000/product/${productId}`
-        fetch(url, {
-            method: 'PUT',
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(productInfo)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.acknowledged) {
+        axios.put(url, productInfo)
+            .then(function (response) {
+                console.log(response)
+                if (response.data.acknowledged) {
                     setIsReload(!isReload)
                     reset();
                     navigate('/')
                 }
             })
+            .catch(function (error) {
+                console.log(error);
+            });
+        /*  fetch(url, {
+             method: 'PUT',
+             headers: {
+                 "content-type": "application/json"
+             },
+             body: JSON.stringify(productInfo)
+         })
+             .then(res => res.json())
+             .then(data => {
+                 if (data.acknowledged) {
+                     setIsReload(!isReload)
+                     reset();
+                     navigate('/')
+                 }
+             }) */
 
     };
     return (

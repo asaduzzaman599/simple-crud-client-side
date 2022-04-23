@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -5,14 +6,21 @@ const Product = ({ product: { _id, name, description, price }, reload }) => {
     const [isReaload, setIsReload] = reload;
     const handleDelete = (id) => {
         const url = `http://localhost:2000/product/${id}`
-        fetch(url, {
+        axios.delete(url).then(res => {
+            if (res.data.deletedCount) {
+                setIsReload(!isReaload)
+            }
+        });
+
+
+        /* fetch(url, {
             method: "DELETE"
         }).then(res => res.json())
             .then(data => {
                 if (data.deletedCount) {
                     setIsReload(!isReaload)
                 }
-            })
+            }) */
     }
     return (
         <div className='d-flex justify-content-between p-4 m-4 bg-secondary rounded text-light'>

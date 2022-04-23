@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -8,21 +9,34 @@ const AddProduct = ({ reload }) => {
     const navigate = useNavigate()
     const { register, handleSubmit, reset } = useForm();
     const onSubmit = productInfo => {
-        fetch('http://localhost:2000/product', {
-            method: 'POST',
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(productInfo)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.result.acknowledged) {
+        axios.post('http://localhost:2000/product', productInfo)
+            .then(function (response) {
+                if (response.data.result.acknowledged) {
                     setIsReload(!isReload)
                     reset();
                     navigate('/')
                 }
             })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+        /* 
+                fetch('http://localhost:2000/product', {
+                    method: 'POST',
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify(productInfo)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.result.acknowledged) {
+                            setIsReload(!isReload)
+                            reset();
+                            navigate('/')
+                        }
+                    }) */
 
     };
     return (
